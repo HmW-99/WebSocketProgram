@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #chat-window {
+        height: 300px;
+        overflow-y: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chat-window"></div>
+    <input type="text" id="message-input" placeholder="메시지를 입력하세요">
+    <button onclick="sendMessage()">전송</button>
+
+    <script>
+      const chatWindow = document.getElementById('chat-window');
+      const messageInput = document.getElementById('message-input');
+      const socket = new WebSocket('ws://localhost:3001');
+
+      socket.onopen = () => {
+        console.log('서버에 연결되었습니다.');
+      };
+
+      socket.onmessage = (event) => {
+        const message = event.data;
+        displayMessage(message);
+      };
+
+      function displayMessage(message) {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        chatWindow.appendChild(messageElement);
+      }
+
+      function sendMessage() {
+        const message = messageInput.value;
+        if (message) {
+          socket.send(message);
+          messageInput.value = '';
+        }
+      }
+    </script>
+  </body>
+</html>
