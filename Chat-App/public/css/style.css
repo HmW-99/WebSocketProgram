@@ -18,7 +18,7 @@ form input {
     border: 0;
     border-radius: 5px;
     padding: 10px;
-    width: 90%;
+    width: 80%;
     margin-right: 0.5%;
 }
 form button {
@@ -41,8 +41,9 @@ form button {
     align-items: flex-start;
     background-color: white;
     border-radius: 5px;
-    padding: 3px 5px;
-    margin: 5px auto 5px 5px;
+    padding: 5px 10px;
+    margin: 10px auto 10px 10px;
+    font-size: 24px;
 }
 
 .my-message-wrapper {
@@ -50,6 +51,7 @@ form button {
     align-items: flex-end;
     background-color: #ffd600;
     border-radius: 5px;
-    padding: 3px 5px;
-    margin: 5px 5px 5px auto;
+    padding: 5px 10px;
+    margin: 10px 10px 10px auto;
+    font-size: 24px;
 }
