@@ -1,69 +1,55 @@
-.chat-window {
-  height: 300px;
-  overflow-y: scroll;
-  font-size: 14px;
-  width: 50%;
-  margin-bottom: 10px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font: 13px Helvetica, Arial;
+    background-color: #CEECF5;
+}
+form {
+    background: #eee;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+form input {
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 90%;
+    margin-right: 0.5%;
+}
+form button {
+    width: 9%;
+    border-radius: 5px;
+    background: #ffd600;
+    border: none;
+    padding: 10px;
+}
+#messages {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.chat-container {
-  width: 60%;
-  height: 70vh;
-  margin: 0 auto;
-  background-color: white;
-  border-radius: 5px;
-  overflow-y: scroll;
-  padding: 10px;
+.others-message-wrapper {
+    max-width: 70%;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: 5px;
+    padding: 3px 5px;
+    margin: 5px auto 5px 5px;
 }
 
-.chat-messages {
-  height: 100%;
-  overflow-y: scroll;
-  border: 1px solid #ccc;
-  padding: 10px;
-}
-
-.chat-input {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.chat-input input[type="text"] {
-  flex: 1;
-  padding: 5px;
-}
-
-.chat-input button {
-  margin-left: 10px;
-  padding: 5px 10px;
-}
-
-.chat-input button,
-.chat-input input[type="text"] {
-  font-size: 14px;
-}
-
-.chat-input button[type="reset"] {
-  background-color: #ccc;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-
-.message {
-  margin-bottom: 5px;
-  padding: 5px;
-  border-radius: 5px;
-  word-wrap: break-word;
-}
-
-.my-message {
-  background-color: #c7e0f4;
-  text-align: right;
-}
-
-.other-message {
-  background-color: #e0e0e0;
-  text-align: left;
+.my-message-wrapper {
+    max-width: 70%;
+    align-items: flex-end;
+    background-color: #ffd600;
+    border-radius: 5px;
+    padding: 3px 5px;
+    margin: 5px 5px 5px auto;
 }

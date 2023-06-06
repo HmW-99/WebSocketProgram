@@ -1,48 +1,59 @@
-const chatWindow = document.getElementById('chat-window');
-const messageInput = document.getElementById('message-input');
-const usernameInput = document.getElementById('username-input');
-const sendButton = document.getElementById('send-button');
-const clearButton = document.getElementById('clear-button');
-
 // 소켓 연결
 const socket = io();
 
-// 메시지 전송
-sendButton.addEventListener('click', () => {
-  const username = usernameInput.value;
-  const content = messageInput.value;
+const chatForm = document.getElementById('chat-form');
+const chatBox = document.getElementById('messages');
+const sendButton = document.getElementById('send-button');
+const clearButton = document.getElementById('clear-button');
 
-  if (username && content) {
-    const message = {
-      username: username,
-      content: content,
-      isMine: true
-    };
+// 발신자 정보 설정
+const senderInfo = {
+    id: Math
+        .random()
+        .toString(36)
+        .substr(2, 9), // 임의의 ID 생성
+    name: '' // 사용자 이름을 저장하지 않으므로 빈 문자열로 설정
+};
 
-    // 메시지 전송
-    socket.emit('chatMessage', message);
-    // 채팅창 초기화
-    messageInput.value = '';
-  }
+socket.on('connect', () => {
+    if (chatForm && chatBox) {
+        sendButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const messageInput = document.getElementById('m');
+            const message = messageInput.value;
+            const chatMessage = {
+                sender: senderInfo,
+                content: message
+            };
+            socket.emit('chatMessage', chatMessage);
+            messageInput.value = '';
+            chatBox.appendChild(makeMessage(chatMessage, true));
+        });
+
+        clearButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            chatBox.innerHTML = '';
+        });
+    }
 });
 
-// 채팅 메시지 표시 함수
+const makeMessage = (message, isMine) => {
+    const msgBox = document.createElement('div');
+    const classname = isMine
+        ? 'my-message-wrapper'
+        : 'others-message-wrapper';
+    msgBox.className = classname;
+    msgBox.innerText = message.content;
+    return msgBox;
+};
+
 function displayMessage(message) {
-  const messageElement = document.createElement('div');
-  messageElement.classList.add('message');
-  messageElement.textContent = `${message.username}: ${message.content}`;
-
-  if (message.isMine) {
-    messageElement.classList.add('my-message');
-  } else {
-    messageElement.classList.add('other-message');
-  }
-
-  chatWindow.appendChild(messageElement);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
+    chatBox.appendChild(makeMessage(message, false));
 }
 
-// 채팅창 초기화
-clearButton.addEventListener('click', () => {
-  chatWindow.innerHTML = '';
+socket.on('chatMessage', (message) => {
+    if (message.sender.id !== senderInfo.id) {
+        // 상대방이 보낸 메세지인 경우만 표시
+        displayMessage(message);
+    }
 });
